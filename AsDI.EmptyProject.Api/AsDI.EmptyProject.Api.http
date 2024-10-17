@@ -1,0 +1,6 @@
+@AsDI.EmptyProject.Api_HostAddress = http://localhost:5192
+
+GET {{AsDI.EmptyProject.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

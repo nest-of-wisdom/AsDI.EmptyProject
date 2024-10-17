@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Authors>Nest of Wisdom</Authors>
+    <Company>ShangHai Nest of Wisdom co.Ltd</Company>
+    <Version>1.6.5</Version>
+    <Title>AsDI.DbExtend</Title>
+    <Description></Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AsDI.Core" Version="1.6.5" />
+  </ItemGroup>
+
+</Project>

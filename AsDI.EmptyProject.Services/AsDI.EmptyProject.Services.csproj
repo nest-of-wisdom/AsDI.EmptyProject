@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AsDI.EmptyProject.IServices\AsDI.EmptyProject.IServices.csproj" />
+    <ProjectReference Include="..\AsDI.EmptyProject.Repositories\AsDI.EmptyProject.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

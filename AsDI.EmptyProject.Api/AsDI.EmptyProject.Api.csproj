@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AsDI.Core.Web" Version="1.6.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AsDI.EmptyProject.IServices\AsDI.EmptyProject.IServices.csproj" />
+    <ProjectReference Include="..\AsDI.EmptyProject.Services\AsDI.EmptyProject.Services.csproj" />
+    <ProjectReference Include="..\AsDI.EmptyProject.Utils\AsDI.EmptyProject.Utils.csproj" />
+    <ProjectReference Include="..\AsDI.Logger\AsDI.Logger.csproj" />
+  </ItemGroup>
+
+</Project>
