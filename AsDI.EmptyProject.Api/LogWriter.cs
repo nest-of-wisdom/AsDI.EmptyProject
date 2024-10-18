@@ -9,7 +9,7 @@ namespace AsDI.EmptyProject.Api
     {
         public void Begin(LogInfo logInfo)
         {
-            Console.WriteLine("开始执行：" + logInfo.CurrentTrace + "[用时{0}]", logInfo.Duration);
+            Console.WriteLine("开始执行：" + logInfo.CurrentTrace);
         }
         public void End(LogInfo logInfo)
         {
