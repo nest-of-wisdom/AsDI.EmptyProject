@@ -2,7 +2,7 @@
 using AsDI.Logger;
 using System.Text.RegularExpressions;
 
-namespace AsDI.EmptyProject.Api
+namespace AsDI.Logger
 {
     [Service]
     public class LogWriter : ILogWriter
