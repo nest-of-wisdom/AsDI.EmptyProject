@@ -1,6 +1,4 @@
-
 using AsDI.Core.Web;
-using System.Linq.Expressions;
 
 namespace AsDI.EmptyProject.Api
 {
@@ -12,7 +10,7 @@ namespace AsDI.EmptyProject.Api
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().IncludeRestWebApi();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

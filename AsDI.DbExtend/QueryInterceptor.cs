@@ -9,7 +9,7 @@ namespace AsDI.DbExtend
     public class QueryInterceptor : IInterceptor
     {
         private readonly IDbExecutor nativeExecutor;
-        private static readonly Type nativeType = typeof(NactiveExecuteAttribute);
+        private static readonly Type nativeType = typeof(NativeExecuteAttribute);
 
         public QueryInterceptor(IDbExecutor executor)
         {
@@ -18,7 +18,8 @@ namespace AsDI.DbExtend
 
         public object Around(AspectEntity aspect)
         {
-            if (aspect.Method.GetTargetAnalyzer(aspect.Target).FinalTarget() != null)
+            //有最终实现或者有有默认实现
+            if (aspect.Method.GetTargetAnalyzer(aspect.Target).FinalTarget() != null || !aspect.Method.Method.IsAbstract)
             {
                 try
                 {
@@ -55,8 +56,8 @@ namespace AsDI.DbExtend
                     ps.Add(item.Name, item.Value);
                 }
 
-                string sql = ((NactiveExecuteAttribute)native).Sql;
-                SqlType type = ((NactiveExecuteAttribute)native).SqlType;
+                string sql = ((NativeExecuteAttribute)native).Sql;
+                SqlType type = ((NativeExecuteAttribute)native).SqlType;
                 switch (type)
                 {
                     case SqlType.DQL: return nativeExecutor.Query(sql, ps, aspect.Method.ReturnType);

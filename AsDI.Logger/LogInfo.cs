@@ -1,6 +1,6 @@
 ﻿using AsDI.Interceptor;
 
-namespace AsDI.Logger
+namespace AsDI.Log
 {
     public class LogInfo
     {
@@ -15,6 +15,14 @@ namespace AsDI.Logger
             this.ServiceName = "";
             this.ClassName = "";
             this.MethodName = "";
+            this.Message = message;
+        }
+
+        public LogInfo(string message, string className, string methodName)
+        {
+            this.ServiceName = className;
+            this.ClassName = className;
+            this.MethodName = methodName;
             this.Message = message;
         }
 
@@ -102,6 +110,11 @@ namespace AsDI.Logger
         /// 用时（毫秒）
         /// </summary>
         public double? Duration { get; set; }
+
+        /// <summary>
+        /// 扩展信息
+        /// </summary>
+        public IDictionary<string, object>? ExtraInfo { get; set; }
 
     }
 }

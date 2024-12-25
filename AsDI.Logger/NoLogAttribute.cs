@@ -1,4 +1,4 @@
-﻿namespace AsDI.Logger
+﻿namespace AsDI.Log
 {
 
     /// <summary>

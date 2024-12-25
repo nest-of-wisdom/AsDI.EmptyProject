@@ -107,6 +107,11 @@ namespace AsDI.DbExtend.EF
             }
         }
 
+        public T Query<T>(string sql, IDictionary<string, object> parameters)
+        {
+            return (T)Query(sql, parameters, typeof(T));
+        }
+
         public IEnumerable<T> QueryList<T>(string sql, IDictionary<string, object> parameters)
         {
             var rawSql = RawSql.Parse(sql, parameters);
@@ -202,8 +207,17 @@ namespace AsDI.DbExtend.EF
             }
             else if (type.IsArray)
             {
-                rtn.IsArray = type.IsArray;
-                rtn.ElementType = type.GetElementType();
+                var eleType = type.GetElementType();
+                if (IsPrimitive(eleType))
+                {
+                    rtn.IsPrimitiveType = true;
+                    rtn.ElementType = type;
+                }
+                else
+                {
+                    rtn.IsArray = type.IsArray;
+                    rtn.ElementType = type.GetElementType();
+                }
             }
             else if (IsPrimitive(type))
             {

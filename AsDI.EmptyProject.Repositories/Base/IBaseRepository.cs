@@ -111,5 +111,16 @@ namespace AsDI.EmptyProject.Repositories.Base
         /// <returns></returns>
         TModel GetSingle<TKey>(Expression<Func<TModel, bool>> filterExpression, Expression<Func<TModel, TKey>> orderBy);
 
+
+        /// <summary>
+        /// 用SQL查询
+        /// </summary>
+        /// <param name="condition">查询条件</param>
+        /// <param name="parameters">查询参数</param>
+        /// <param name="page">页码</param>
+        /// <param name="pageSize">每页数量</param>
+        /// <returns></returns>
+        PagedList<TModel> Query(string condition, Dictionary<string, object> parameters, int page, int pageSize);
+
     }
 }

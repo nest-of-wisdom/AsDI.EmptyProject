@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsDI.DbExtend.EF", "AsDI.Db
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsDI.Logger", "AsDI.Logger\AsDI.Logger.csproj", "{5A328929-8776-4352-99E6-1E711D68DB60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsDI.Observer", "AsDI.Observer\AsDI.Observer.csproj", "{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{5A328929-8776-4352-99E6-1E711D68DB60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A328929-8776-4352-99E6-1E711D68DB60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A328929-8776-4352-99E6-1E711D68DB60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

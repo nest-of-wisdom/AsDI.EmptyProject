@@ -1,7 +1,7 @@
 ﻿using AsDI.Attributes;
 using AsDI.Interceptor;
 
-namespace AsDI.Logger
+namespace AsDI.Log
 {
     [Fit("!attr('AsDI.+NoLogAttribute')", 999)]
     public class LogInterceptor : IInterceptor

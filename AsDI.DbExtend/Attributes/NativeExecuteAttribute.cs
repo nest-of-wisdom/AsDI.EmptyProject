@@ -11,9 +11,9 @@ namespace AsDI.DbExtend.Attributes
     /// 原始数据查询定义
     /// </summary>
     [System.AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    public sealed class NactiveExecuteAttribute : Attribute
+    public sealed class NativeExecuteAttribute : Attribute
     {
-        public NactiveExecuteAttribute(string sql)
+        public NativeExecuteAttribute(string sql)
         {
             this.Sql = sql;
         }

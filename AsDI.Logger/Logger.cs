@@ -1,11 +1,6 @@
 ﻿using AsDI.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AsDI.Logger
+namespace AsDI.Log
 {
     [Include]
     public class Logger
@@ -19,11 +14,14 @@ namespace AsDI.Logger
 
         private static AsyncLocal<string> currentTrace;
 
+        private static AsyncLocal<Dictionary<string, object>> extraInfos;
+
         static Logger()
         {
             logStack = new AsyncLocal<Stack<LogInfo>>();
             currentTrace = new AsyncLocal<string>();
             logTranceId = new AsyncLocal<string>();
+            extraInfos = new AsyncLocal<Dictionary<string, object>>();
         }
 
         public static void LogStart(LogInfo log)
@@ -32,9 +30,10 @@ namespace AsDI.Logger
             {
                 logStack.Value = new Stack<LogInfo>();
             }
-            log.TraceId = CurrentTrace;
+            log.TraceId = TranceId;
             log.CurrentTrace = InTrace(log.ClassName + "." + log.MethodName);
             log.StartTime = DateTime.Now;
+            log.ExtraInfo = extraInfos.Value;
             try
             {
                 writer?.Begin(log);
@@ -62,6 +61,7 @@ namespace AsDI.Logger
                 item.Duration = (item.EndTime - item.StartTime)?.TotalMilliseconds;
                 item.Result = result;
                 item.Exception = exception;
+                item.ExtraInfo = extraInfos.Value;
                 if (item.Exception != null)
                 {
                     item.LogLevel = LogLevel.Error;
@@ -92,7 +92,7 @@ namespace AsDI.Logger
             {
                 if (string.IsNullOrEmpty(logTranceId.Value))
                 {
-                    logTranceId.Value = Guid.NewGuid().ToString();
+                    logTranceId.Value = Guid.NewGuid().ToString("N").ToUpper();
                 }
                 return logTranceId.Value;
             }
@@ -110,7 +110,7 @@ namespace AsDI.Logger
             }
         }
 
-        public static string InTrace(string trace)
+        private static string InTrace(string trace)
         {
             var current = CurrentTrace;
             if (current.Length > 0)
@@ -125,7 +125,7 @@ namespace AsDI.Logger
             return CurrentTrace;
         }
 
-        public static string OutTrace()
+        private static string OutTrace()
         {
             var current = CurrentTrace;
             if (current.Length > 0)
@@ -145,6 +145,29 @@ namespace AsDI.Logger
             else
             {
                 return "";
+            }
+        }
+
+        public static void AddExtraInfo(string key, object value)
+        {
+            if (extraInfos.Value == null)
+            {
+                extraInfos.Value = new Dictionary<string, object>();
+            }
+            extraInfos.Value[key] = value;
+        }
+
+        public static void AddExtraInfo(IDictionary<string, object> extraInfo)
+        {
+            var current = extraInfos.Value;
+            if (current == null)
+            {
+                current = new Dictionary<string, object>();
+                extraInfos.Value = current;
+            }
+            foreach (var kv in extraInfo)
+            {
+                current[kv.Key] = kv.Value;
             }
         }
 

@@ -26,12 +26,18 @@ namespace AsDI.EmptyProject.Services
 
         public UserDTO GetByUserName(string userName)
         {
+            string condition = "userId='admin'";
+
+            PagedList<UserEntity> data = repository.Query(condition, new Dictionary<string, object>(), 1, 10);
+
             return repository.FindUser(userName).Adapt<UserDTO>();
         }
 
         public PagedList<UserDTO> Query(string keyword, int page, int pageSize)
         {
             keyword ??= "";
+
+
 
             var data = repository.GetList(p => keyword == "" || p.UserName.Contains(keyword) || p.Email.Contains(keyword), p => p.CreatedTime, page, pageSize);
             PagedList<UserDTO> rtn = new()

@@ -5,7 +5,7 @@ using AsDI.Interceptor;
 
 namespace AsDI.DbExtend
 {
-    [Fit("true", 100)]
+    [Fit("true", 500)]
     public class TransInterceptor : IInterceptor
     {
 

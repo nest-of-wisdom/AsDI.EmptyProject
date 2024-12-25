@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AsDI.Logger
+﻿namespace AsDI.Log
 {
     public class SurroundLog : IDisposable
     {
         public SurroundLog(string message)
         {
             var logInfo = new LogInfo(message);
+            Logger.LogStart(logInfo);
+        }
+
+        public SurroundLog(string message, string serviceName, string methodName)
+        {
+            var logInfo = new LogInfo(message, serviceName, methodName);
             Logger.LogStart(logInfo);
         }
 

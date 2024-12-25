@@ -17,6 +17,8 @@
 
         object Query(string sql, IDictionary<string, object> parameters, Type returnType);
 
+        T Query<T>(string sql, IDictionary<string, object> parameters);
+
         IEnumerable<T> QueryList<T>(string sql, IDictionary<string, object> parameters);
 
     }

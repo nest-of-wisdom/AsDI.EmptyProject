@@ -3,7 +3,11 @@ using AsDI.DbExtend;
 using AsDI.DbExtend.EF;
 using AsDI.EmptyProject.Utils.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Mysqlx.Prepare;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace AsDI.EmptyProject.Repositories.Base
 {
@@ -11,6 +15,33 @@ namespace AsDI.EmptyProject.Repositories.Base
     public class BaseRepository<TModel> : IBaseRepository<TModel>
         where TModel : BaseEntity, new()
     {
+
+
+        private readonly string tableName;
+
+
+        public BaseRepository()
+        {
+            var type = typeof(TModel);
+
+            var attr = type.GetCustomAttribute<TableAttribute>();
+
+            if (attr != null)
+            {
+                tableName = attr.Name;
+            }
+            else
+            {
+                tableName = type.Name;
+            }
+
+        }
+
+
+        [AutoAssemble]
+        private IDbExecutor executor;
+
+
 
         private DbContext Db
         {
@@ -170,6 +201,48 @@ namespace AsDI.EmptyProject.Repositories.Base
             }
             var rtn = data.ToList();
             return rtn;
+
+        }
+
+
+        public PagedList<TModel> Query(string condition, Dictionary<string, object> parameters, int page, int pageSize)
+        {
+            var where = "";
+            if (!string.IsNullOrWhiteSpace(condition))
+            {
+                where = " where " + condition;
+            }
+
+            var sql = "select count(*) from " + tableName + where;
+            var total = executor.Query<int>(sql, parameters);
+
+            sql = "select * from " + tableName + where + " " + ToPageSql(page, pageSize);
+
+            var result = executor.Query<List<TModel>>(sql, parameters);
+
+            return new PagedList<TModel>()
+            {
+                Data = result,
+                Total = total,
+                Page = page,
+                PageSize = pageSize
+            };
+
+        }
+
+        private string ToPageSql(int page, int pageSize)
+        {
+
+            var type = this.Db.Database.ProviderName;
+
+            if (type.ToLower().Contains("mysql"))
+            {
+                return " LIMIT " + pageSize + " OFFSET " + ((page - 1) * pageSize);
+            }
+            else
+            {
+                return "OFFSET " + ((page - 1) * pageSize) + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
+            }
 
         }
     }
