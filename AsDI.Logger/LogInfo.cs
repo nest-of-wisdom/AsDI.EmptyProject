@@ -13,7 +13,7 @@ namespace AsDI.Log
         public LogInfo(string message)
         {
             this.ServiceName = "";
-            this.ClassName = "";
+            this.ClassName = "&";
             this.MethodName = "";
             this.Message = message;
         }
@@ -30,6 +30,10 @@ namespace AsDI.Log
         {
             this.ServiceName = aspectEntity.Method?.TypeName;
             this.ClassName = aspectEntity.TargetAnalyzer.FinalTargetType()?.Name;
+            if (string.IsNullOrEmpty(this.ClassName))
+            {
+                this.ClassName = this.ServiceName;
+            }
             this.MethodName = aspectEntity.Method?.Name;
             this.Parameters = aspectEntity.Method?.GetArgumentsValues();
             var log = aspectEntity.TargetAnalyzer?.FindAttribute<LogAttribute>();
@@ -42,12 +46,17 @@ namespace AsDI.Log
         /// <summary>
         /// 当前日志的请求号
         /// </summary>
-        public string? TraceId { get; set; }
+        public string? TraceId { get; internal set; }
+
+        /// <summary>
+        /// 是否是日志起始
+        /// </summary>
+        public bool IsRoot { get; set; } = false;
 
         /// <summary>
         /// 调用路径
         /// </summary>
-        public string? CurrentTrace { get; set; }
+        public string? CurrentTrace { get; internal set; }
 
         /// <summary>
         /// 服务名称（即接口名称）
@@ -99,22 +108,22 @@ namespace AsDI.Log
         /// <summary>
         /// 开始时间
         /// </summary>
-        public DateTime? StartTime { get; set; }
+        public DateTime? StartTime { get; internal set; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTime? EndTime { get; set; }
+        public DateTime? EndTime { get; internal set; }
 
         /// <summary>
         /// 用时（毫秒）
         /// </summary>
-        public double? Duration { get; set; }
+        public double? Duration { get; internal set; }
 
         /// <summary>
         /// 扩展信息
         /// </summary>
-        public IDictionary<string, object>? ExtraInfo { get; set; }
+        public IDictionary<string, object>? ExtraInfo { get; internal set; }
 
     }
 }

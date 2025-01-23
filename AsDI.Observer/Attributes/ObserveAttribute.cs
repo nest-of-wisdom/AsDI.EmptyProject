@@ -1,5 +1,8 @@
 ﻿namespace AsDI.Observer.Attributes
 {
+    /// <summary>
+    /// 当前方法观察的对象
+    /// </summary>
     [System.AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public sealed class ObserveAttribute : Attribute
     {

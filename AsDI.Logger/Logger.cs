@@ -1,5 +1,4 @@
 ﻿using AsDI.Attributes;
-
 namespace AsDI.Log
 {
     [Include]
@@ -16,27 +15,38 @@ namespace AsDI.Log
 
         private static AsyncLocal<Dictionary<string, object>> extraInfos;
 
+        private static AsyncLocal<bool> writting;
+
+        private static AsyncLocal<LogInfo> last;
+
         static Logger()
         {
             logStack = new AsyncLocal<Stack<LogInfo>>();
             currentTrace = new AsyncLocal<string>();
             logTranceId = new AsyncLocal<string>();
             extraInfos = new AsyncLocal<Dictionary<string, object>>();
+            writting = new AsyncLocal<bool>();
+            last = new AsyncLocal<LogInfo>();
+
         }
 
         public static void LogStart(LogInfo log)
         {
-            if (logStack.Value == null)
-            {
-                logStack.Value = new Stack<LogInfo>();
-            }
+            logStack.Value ??= new Stack<LogInfo>();
             log.TraceId = TranceId;
-            log.CurrentTrace = InTrace(log.ClassName + "." + log.MethodName);
+            var trace = log.ClassName ?? "";
+            if (!string.IsNullOrEmpty(log.MethodName))
+            {
+                trace += (trace.Length > 0 ? "." : "") + log.MethodName;
+            }
+            log.CurrentTrace = InTrace(trace);
             log.StartTime = DateTime.Now;
             log.ExtraInfo = extraInfos.Value;
             try
             {
+                writting.Value = true;
                 writer?.Begin(log);
+                writting.Value = false;
             }
             catch { }
             logStack.Value?.Push(log);
@@ -62,26 +72,29 @@ namespace AsDI.Log
                 item.Result = result;
                 item.Exception = exception;
                 item.ExtraInfo = extraInfos.Value;
-                if (item.Exception != null)
+
+                if (item.Duration > item.Timeout)
                 {
-                    item.LogLevel = LogLevel.Error;
+                    item.LogLevel = LogLevel.Timeout;
                 }
                 else
                 {
                     item.LogLevel = LogLevel.Normal;
                 }
 
-                if (item.Duration > item.Timeout)
+                if (item.Exception != null)
                 {
-                    item.LogLevel = item.LogLevel | LogLevel.Timeout;
+                    item.LogLevel = LogLevel.Error;
                 }
 
                 try
                 {
+                    writting.Value = true;
                     writer?.End(item);
+                    writting.Value = false;
+                    last.Value = item;
                 }
                 catch { }
-
             }
             OutTrace();
         }
@@ -107,6 +120,26 @@ namespace AsDI.Log
             get
             {
                 return currentTrace.Value ?? "";
+            }
+        }
+
+        public static bool IsWritting
+        {
+            get
+            {
+                return writting.Value;
+            }
+            set
+            {
+                writting.Value = value;
+            }
+        }
+
+        public static LogInfo? Last
+        {
+            get
+            {
+                return last.Value;
             }
         }
 
@@ -168,6 +201,18 @@ namespace AsDI.Log
             foreach (var kv in extraInfo)
             {
                 current[kv.Key] = kv.Value;
+            }
+        }
+
+        public static object? GetExtraInfo(string key)
+        {
+            if (extraInfos.Value == null)
+            {
+                return null;
+            }
+            else
+            {
+                return extraInfos.Value[key];
             }
         }
 

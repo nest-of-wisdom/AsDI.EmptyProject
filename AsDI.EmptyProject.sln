@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsDI.Logger", "AsDI.Logger\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsDI.Observer", "AsDI.Observer\AsDI.Observer.csproj", "{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsDI.DbExtend.Dapper", "AsDI.DbExtend.Dapper\AsDI.DbExtend.Dapper.csproj", "{FED906F6-082E-4895-8407-D7BB72C60CB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B07E0C8-FDD6-4B1E-86A8-8E8E485DB13F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FED906F6-082E-4895-8407-D7BB72C60CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FED906F6-082E-4895-8407-D7BB72C60CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FED906F6-082E-4895-8407-D7BB72C60CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FED906F6-082E-4895-8407-D7BB72C60CB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

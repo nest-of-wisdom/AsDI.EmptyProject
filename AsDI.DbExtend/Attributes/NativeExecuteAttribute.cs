@@ -20,6 +20,8 @@ namespace AsDI.DbExtend.Attributes
 
         public string Sql { get; private set; }
 
+        public string CountSql { get; set; }
+
         public SqlType SqlType { get; set; } = SqlType.DQL;
 
     }
