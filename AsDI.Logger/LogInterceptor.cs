@@ -32,7 +32,7 @@ namespace AsDI.Log
 
         private bool NoLog(AspectEntity aspect)
         {
-            var nolog = aspect.TargetAnalyzer.FinalTargetType().GetCustomAttribute<NoLogAttribute>();
+            var nolog = aspect.TargetAnalyzer.FinalTargetType()?.GetCustomAttribute<NoLogAttribute>();
             if (nolog != null)
             {
                 return true;

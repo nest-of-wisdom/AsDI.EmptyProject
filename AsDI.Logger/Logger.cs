@@ -92,9 +92,11 @@ namespace AsDI.Log
                     writting.Value = true;
                     writer?.End(item);
                     writting.Value = false;
-                    last.Value = item;
                 }
                 catch { }
+
+                last.Value = item;
+
             }
             OutTrace();
         }
